@@ -1,28 +1,20 @@
-from tree_sitter import Language, Parser
+from lark import Lark
 from compiler import Compiler
 from sys import argv
 
 
 def get_parse_tree(code):
-    Language.build_library(
-        "build/sudoku.so",
-        ["/home/charlotte/bachelorarbeit/tree-sitter-sudoku"]
-    )
-    SUDOKU_LANGUAGE = Language("build/sudoku.so", "sudoku")
-
-    parser = Parser()
-    parser.set_language(SUDOKU_LANGUAGE)
+    file = open("grammar.ebnf", "r")
+    parser = Lark(file, start="proposition")
+    file.close()
 
     tree = parser.parse(code)
     return tree
 
-# print(c.node, code[c.node.start_byte:c.node.end_byte])
-
 
 if __name__ == "__main__":
     with open(argv[1], "r") as file:
-        code = bytes(file.read(), "utf8")
+        code = file.read()
 
     tree = get_parse_tree(code)
-
-    compiler = Compiler(code, tree)
+    compiler = Compiler(tree)

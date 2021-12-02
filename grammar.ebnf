@@ -1,0 +1,21 @@
+%ignore /[ \t\n\f\r]+/
+
+?proposition : FIELD COMPARISON expression
+
+?expression : value [ OPERATOR value ]
+
+?value : FIELD
+	   | NUMBER
+
+FIELD : /[a-i][1-9]/
+NUMBER : /\d+/
+
+OPERATOR : "+"
+		 | "-"
+
+COMPARISON : "="
+		   | ">"
+		   | "<"
+		   | ">="
+		   | "<="
+		   | "!="
