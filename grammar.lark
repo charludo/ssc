@@ -1,8 +1,8 @@
 %ignore /[ \t\n\f\r]+/
 
-?proposition : FIELD COMPARISON expression
+proposition : FIELD COMPARISON expression
 
-?expression : value [ OPERATOR value ]
+expression : value [ OPERATOR value ]
 
 ?value : FIELD
 	   | NUMBER

@@ -20,13 +20,12 @@ class Compiler:
             return comparison(field, value_map)
 
         elif type == "expression":
-            operands = [self.visit(child) for child in children]
-            if len(operands) == 1:
-                return operands[0]
+            if children[1] is None:
+                return self.visit(children[0])
 
-            operator = operands[1]
+            left, operator, right = [self.visit(child) for child in children]
 
-            return operator(operands[0], operands[2])
+            return operator(left, right)
 
         if type == "FIELD":
             return value
