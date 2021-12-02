@@ -4,7 +4,7 @@ from sys import argv
 
 
 def get_parse_tree(code):
-    file = open("grammar.ebnf", "r")
+    file = open("grammar.lark", "r")
     parser = Lark(file, start="proposition")
     file.close()
 
