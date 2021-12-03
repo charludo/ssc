@@ -4,15 +4,6 @@ from operators import ADD, SUB
 from comparators import EQ, NEQ, LT, LEQ, GT, GEQ
 
 
-def prep_value(value):
-    if value is None:
-        return dict(name="num", value=0)
-    elif isinstance(value, int):
-        return dict(name="num", value=value)
-    else:
-        return dict(name=value, value=[1, 2, 3, 4, 5, 6, 7, 8, 9])
-
-
 class Compiler:
     def __init__(self, tree):
         self.tree = tree
@@ -33,28 +24,24 @@ class Compiler:
             return and_clause(buf)
 
         elif type == "proposition":
-            field = self.visit(children[0])
-            comparison = self.comparison_map[self.visit(children[1])]
-            value_map = self.visit(children[2])
-
-            return comparison(field, value_map)
+            left, comparison, right = [self.visit(child) for child in children]
+            return comparison(left, right)
 
         elif type == "expression":
             if children[1] is None:
                 return self.visit(children[0])
 
             left, operator, right = [self.visit(child) for child in children]
-
             return operator(left, right)
 
         elif type == "FIELD":
-            return prep_value(value)
+            return [[f"{value}{i}"] for i in range(1, 10)]
         elif type == "NUMBER":
-            return prep_value(int(value))
+            return [["True"] if i == value else ["False"] for i in range(1, 10)]
         elif type == "OPERATOR":
             return self.operator_map[value]
         elif type == "COMPARISON":
-            return value
+            return self.comparison_map[value]
 
     comparison_map = {
         "=": EQ,
