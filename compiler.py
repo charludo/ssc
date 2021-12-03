@@ -1,7 +1,7 @@
 from lark import Tree
 from helpers import and_clause
 from operators import ADD, SUB
-from comparators import EQ, NEQ
+from comparators import EQ, NEQ, LT, LEQ, GT, GEQ
 
 
 def prep_value(value):
@@ -58,6 +58,10 @@ class Compiler:
 
     comparison_map = {
         "=": EQ,
+        "<": LT,
+        ">": GT,
+        "<=": LEQ,
+        ">=": GEQ,
         "!=": NEQ
     }
 

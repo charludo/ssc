@@ -3,7 +3,7 @@ def and_clause(ks):
 
 
 def or_clause(ks):
-    return " | ".join(ks)
+    return " | ".join(ks) if len(ks) else "ERR"
 
 
 def grouped(clause):
