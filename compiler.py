@@ -3,24 +3,13 @@ from itertools import product
 from helpers import and_clause, or_clause, grouped
 
 
-def prep_args(func):
-    def prep_value(value):
-        if value is None:
-            return "num", 0
-        elif isinstance(value, int):
-            return "num", value
-        else:
-            return value, [1, 2, 3, 4, 5, 6, 7, 8, 9]
-
-    def inner(left, right):
-        name, value = prep_value(left)
-        le = dict(name=name, value=value)
-
-        name, value = prep_value(right)
-        ri = dict(name=name, value=value)
-
-        return func(le, ri)
-    return inner
+def prep_value(value):
+    if value is None:
+        return dict(name="num", value=0)
+    elif isinstance(value, int):
+        return dict(name="num", value=value)
+    else:
+        return dict(name=value, value=[1, 2, 3, 4, 5, 6, 7, 8, 9])
 
 
 class Compiler:
@@ -50,9 +39,9 @@ class Compiler:
             return operator(left, right)
 
         if type == "FIELD":
-            return value
+            return prep_value(value)
         elif type == "NUMBER":
-            return int(value)
+            return prep_value(int(value))
         elif type == "OPERATOR":
             return self.operator_map[value]
         elif type == "COMPARISON":
@@ -60,7 +49,17 @@ class Compiler:
 
     @staticmethod
     def EQ(field, value_map):
+        field = field["name"]
+
+        if isinstance(value_map, dict) and value_map["name"] == "num":
+            return f"{field}{value_map['value']}"
+        elif isinstance(value_map, dict):
+            right_name = value_map["name"]
+            values = value_map["value"]
+            return grouped(or_clause([f"({field}{i} & {right_name}{i})" for i in values]))
+
         const, names, combs = value_map
+
         if const:
             return f"{field}{const}"
 
@@ -79,10 +78,7 @@ class Compiler:
                 options.append(or_clause(o_vals))
         return(grouped(or_clause(options)))
 
-
-
     @staticmethod
-    @prep_args
     def ADD(left, right):
         if left["name"] == "num" and right["name"] == "num":
             return left["value"] + right["value"], [], []
