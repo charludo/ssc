@@ -1,5 +1,6 @@
 from lark import Tree
 from itertools import product
+from helpers import and_clause, or_clause, grouped
 
 
 def prep_args(func):
@@ -59,10 +60,26 @@ class Compiler:
 
     @staticmethod
     def EQ(field, value_map):
-        print(value_map)
         const, names, combs = value_map
         if const:
             return f"{field}{const}"
+
+        options = []
+        # outer loop: values the field can have
+        for fv in range(9):
+            # middle loop: value tuples that fit the current value of the outer loop
+            o_vals = []
+            for tuple in combs[fv]:
+                # inner loop: assign values from the tuple to the fieldnames
+                t_vals = [f"{field}{fv+1}"]
+                for i in range(len(names)):
+                    t_vals.append(f"{names[i]}{tuple[i]}")
+                o_vals.append(grouped(and_clause(t_vals)))
+            if len(o_vals):
+                options.append(or_clause(o_vals))
+        return(grouped(or_clause(options)))
+
+
 
     @staticmethod
     @prep_args
