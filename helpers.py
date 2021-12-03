@@ -7,8 +7,16 @@ def and_clause(left, right):
         elif "True" in variant:
             variant.remove("True")
         variants[i] = " & ".join(variant)
-
     return list(set(variants))
+
+
+def simple_and(ks):
+    ks = set(ks)
+    ks.discard("True")
+    ks = list(ks)
+    if len(ks) > 1:
+        return "(" + " & ".join(ks) + ")"
+    return ks[0]
 
 
 def or_clause(ks):

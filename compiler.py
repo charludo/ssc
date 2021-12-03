@@ -21,7 +21,7 @@ class Compiler:
             buf = []
             for child in children:
                 buf.append(self.visit(child))
-            return and_clause(buf)
+            return buf[0]
 
         elif type == "proposition":
             left, comparison, right = [self.visit(child) for child in children]
@@ -37,7 +37,7 @@ class Compiler:
         elif type == "FIELD":
             return [[f"{value}{i}"] for i in range(1, 10)]
         elif type == "NUMBER":
-            return [["True"] if i == value else ["False"] for i in range(1, 10)]
+            return [["True"] if i == int(value) else ["False"] for i in range(1, 10)]
         elif type == "OPERATOR":
             return self.operator_map[value]
         elif type == "COMPARISON":

@@ -11,9 +11,9 @@ def cartesian(func):
         for i in range(9):
             vals = []
             for pair in value_map[i]:
-                vals.append(and_clause(left[pair[0]], right[pair[1]]))
-            vals[:] = [v for v in vals if v != ["False"]]
-            vals = vals if vals else [["False"]]
+                vals.extend(and_clause(left[pair[0]], right[pair[1]]))
+            vals[:] = [v for v in vals if v != "False"]
+            vals = vals if vals else ["False"]
             values.append(vals)
         return values
     return inner
