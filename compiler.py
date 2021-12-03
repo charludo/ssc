@@ -1,5 +1,5 @@
 from lark import Tree
-from helpers import and_clause
+from helpers import simple_and
 from operators import ADD, SUB
 from comparators import EQ, NEQ, LT, LEQ, GT, GEQ
 
@@ -21,7 +21,7 @@ class Compiler:
             buf = []
             for child in children:
                 buf.append(self.visit(child))
-            return buf[0]
+            return simple_and(buf)
 
         elif type == "proposition":
             left, comparison, right = [self.visit(child) for child in children]
