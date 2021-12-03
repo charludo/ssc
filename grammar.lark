@@ -1,5 +1,7 @@
 %ignore /[ \t\n\f\r]+/
 
+source : proposition+
+
 proposition : FIELD COMPARISON expression
 
 expression : value [ OPERATOR value ]

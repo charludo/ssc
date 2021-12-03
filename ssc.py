@@ -5,7 +5,7 @@ from sys import argv
 
 def get_parse_tree(code):
     file = open("grammar.lark", "r")
-    parser = Lark(file, start="proposition")
+    parser = Lark(file, start="source")
     file.close()
 
     tree = parser.parse(code)
@@ -18,3 +18,6 @@ if __name__ == "__main__":
 
     tree = get_parse_tree(code)
     compiler = Compiler(tree)
+
+    propositions = compiler.get_propositions()
+    print(propositions)
