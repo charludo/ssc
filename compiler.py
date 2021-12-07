@@ -1,5 +1,4 @@
 from lark import Tree
-from helpers import simple_and
 from operators import ADD, SUB
 from comparators import EQ, NEQ, LT, LEQ, GT, GEQ
 
@@ -9,6 +8,7 @@ class Compiler:
         self.tree = tree
 
     def get_propositions(self):
+        # print(self.tree)
         return self.visit(self.tree)
 
     def visit(self, node):
@@ -18,19 +18,18 @@ class Compiler:
             type, value, children = node.type, node.value, []
 
         if type == "source":
-            buf = []
+            truths = []
             for child in children:
-                buf.append(self.visit(child))
-            return simple_and(buf)
+                truths.append(self.visit(child))
+            return truths
 
         elif type == "proposition":
             left, comparison, right = [self.visit(child) for child in children]
             return comparison(left, right)
 
         elif type == "expression":
-            if children[1] is None:
+            if len(children) == 1:
                 return self.visit(children[0])
-
             left, operator, right = [self.visit(child) for child in children]
             return operator(left, right)
 

@@ -2,9 +2,9 @@
 
 source : proposition+
 
-proposition : FIELD COMPARISON expression
+proposition : FIELD COMPARISON (expression | proposition)
 
-expression : value [ OPERATOR value ]
+expression : value | value OPERATOR expression
 
 ?value : FIELD
 	   | NUMBER

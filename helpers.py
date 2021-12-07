@@ -24,4 +24,6 @@ def or_clause(ks):
 
 
 def grouped(clause):
+    if len(clause) == 1:
+        return clause[0]
     return f"({clause})" if len(clause) else None

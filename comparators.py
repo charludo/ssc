@@ -6,12 +6,13 @@ def left_range(left, min, max):
 
 
 def EQ(left, right):
-    options = []
     for i in range(len(left)):
+        options = []
         for term in right[i]:
             if term != "False":
                 options.append(simple_and([left[i][0], term]))
-    return grouped(or_clause(options))
+        left[i] = options if len(options) else ["False"]
+    return left
 
 
 def NEQ(left, right):
@@ -19,12 +20,14 @@ def NEQ(left, right):
 
 
 def LT(left, right, offset=0):
-    options = []
     for i in range(len(left)):
+        options = []
         for term in right[i]:
             if term != "False":
                 options.append(simple_and([left_range(left, 0, i+offset), term]))
-    return grouped(or_clause(options))
+        left[i] = options if len(options) else ["False"]
+        print(options)
+    return left
 
 
 def LEQ(left, right):
@@ -32,12 +35,13 @@ def LEQ(left, right):
 
 
 def GT(left, right, offset=1):
-    options = []
     for i in range(len(left)):
+        options = []
         for term in right[i]:
             if term != "False":
                 options.append(simple_and([left_range(left, i+offset, 9), term]))
-    return grouped(or_clause(options))
+        left[i] = options if len(options) else ["False"]
+    return left
 
 
 def GEQ(left, right):
