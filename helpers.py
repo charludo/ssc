@@ -1,13 +1,21 @@
+from itertools import product
+
+
 def and_clause(left, right):
-    variants = [[left[0], right[i]] for i in range(len(right))]
-    for i in range(len(variants)):
-        variant = variants[i]
+    if not isinstance(left, list):
+        left = [left]
+    if not isinstance(right, list):
+        right = [right]
+    variants = list(product(range(len(left)), range(len(right))))
+    finished = []
+    for v in variants:
+        variant = [left[v[0]], right[v[1]]]
         if "False" in variant:
             variant = ["False"]
         elif "True" in variant:
             variant.remove("True")
-        variants[i] = " & ".join(variant)
-    return list(set(variants))
+        finished.append(" & ".join(variant))
+    return list(set(finished))
 
 
 def simple_and(ks):

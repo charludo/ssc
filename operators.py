@@ -4,7 +4,7 @@ from helpers import and_clause
 
 def cartesian(func):
     def inner(left, right):
-        cartesian_indeces = list(product(range(len(left)), range(len(right))))
+        cartesian_indeces = list(product(range(9), range(9)))
         value_map = func(cartesian_indeces)
 
         values = []

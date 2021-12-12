@@ -22,13 +22,13 @@ if __name__ == "__main__":
 
     propositions = compiler.get_propositions()
 
-    output = []
-    for truth in propositions:
-        t = []
-        for option in truth:
-            if option != ["False"]:
-                t.append(or_clause(option))
-        output.append(grouped(or_clause(t)))
-    propositions = simple_and(output)
+    # output = []
+    # for truth in propositions:
+    #     t = []
+    #     for option in truth:
+    #         if option != ["False"]:
+    #             t.append(or_clause(option))
+    #     output.append(grouped(or_clause(t)))
+    # propositions = simple_and(output)
 
     print(propositions)
