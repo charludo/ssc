@@ -8,7 +8,7 @@ def left_range(left, min, max):
 def EQ(left, right):
     for i in range(9):
         options = and_clause(left[i], right[i])
-        left[i] = options if len(options) else ["False"]
+        left[i] = [grouped(or_clause(options))] if len(options) else ["False"]
     return left
 
 
@@ -20,7 +20,7 @@ def LT(left, right, offset=0):
     buffer = []
     for i in range(9):
         options = and_clause(left_range(left, 0, i+offset), right[i])
-        buffer.append(options if len(options) else ["False"])
+        buffer.append([grouped(or_clause(options))] if len(options) else ["False"])
     return buffer
 
 
@@ -32,7 +32,7 @@ def GT(left, right, offset=1):
     buffer = []
     for i in range(9):
         options = and_clause(left_range(left, i+offset, 9), right[i])
-        buffer.append(options if len(options) else ["False"])
+        buffer.append([grouped(or_clause(options))] if len(options) else ["False"])
     return buffer
 
 
