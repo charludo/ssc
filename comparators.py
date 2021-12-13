@@ -1,9 +1,4 @@
-from helpers import simple_and, or_clause, grouped, and_clause
-from itertools import groupby
-
-
-def left_range(left, min, max):
-    return grouped(or_clause([simple_and(left[i]) for i in range(min, max)]))
+from helpers import or_clause, grouped, and_clause
 
 
 def EQ(left, right):
@@ -33,10 +28,13 @@ def LEQ(left, right):
 
 
 def GT(left, right, offset=1):
-    buffer = []
-    for i in range(9):
-        options = and_clause(left_range(left, i+offset, 9), right[i])
-        buffer.append([grouped(or_clause(options))] if len(options) else ["False"])
+    buffer = [[], [], [], [], [], [], [], [], []]
+    for i in range(offset, 9):
+        if right[i] != ["False"]:
+            for j in range(i+offset, 9):
+                options = and_clause(left[j], right[i])
+                buffer[j].extend(options) if len(options) else ["False"]
+
     return buffer
 
 
