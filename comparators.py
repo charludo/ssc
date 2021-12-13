@@ -1,4 +1,5 @@
 from helpers import simple_and, or_clause, grouped, and_clause
+from itertools import groupby
 
 
 def left_range(left, min, max):
@@ -17,10 +18,13 @@ def NEQ(left, right):
 
 
 def LT(left, right, offset=0):
-    buffer = []
-    for i in range(9):
-        options = and_clause(left_range(left, 0, i+offset), right[i])
-        buffer.append([grouped(or_clause(options))] if len(options) else ["False"])
+    buffer = [[], [], [], [], [], [], [], [], []]
+    for i in range(1-offset, 9):
+        if right[i] != ["False"]:
+            for j in range(0, i+offset):
+                options = and_clause(left[j], right[i])
+                buffer[j].extend(options) if len(options) else ["False"]
+
     return buffer
 
 

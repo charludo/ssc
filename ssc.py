@@ -28,7 +28,10 @@ if __name__ == "__main__":
         for option in truth:
             option = [o for o in option if "False" not in o]
             if option:
-                t.append(or_clause(option))
+                if len(option) > 1:
+                    t.append(grouped(or_clause(option)))
+                else:
+                    t.append(or_clause(option))
         output.append(grouped(or_clause(t)))
     propositions = simple_and(output)
 

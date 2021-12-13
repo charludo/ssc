@@ -14,7 +14,10 @@ def and_clause(left, right):
             variant = ["False"]
         elif "True" in variant:
             variant.remove("True")
-        finished.append(" & ".join(variant))
+        if len(variant) > 1:
+            finished.append("(" + " & ".join(variant) + ")")
+        else:
+            finished.append(variant[0])
     return list(set(finished))
 
 

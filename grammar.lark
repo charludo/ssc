@@ -2,7 +2,7 @@
 
 source : proposition+
 
-proposition : FIELD COMPARISON (expression | proposition)
+proposition : expression COMPARISON (expression | proposition)
 
 expression : value | value OPERATOR expression
 
