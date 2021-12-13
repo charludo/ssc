@@ -43,3 +43,13 @@ def SUB(options):
                 vals.append(pair)
         legal_pairs.append(vals)
     return legal_pairs
+
+
+def OR(left, right):
+    buffer = []
+    for i in range(9):
+        combined = set([*left[i], *right[i]])
+        if len(combined) > 1:
+            combined.discard("False")
+        buffer.append(list(combined))
+    return buffer

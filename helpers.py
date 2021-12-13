@@ -31,7 +31,11 @@ def simple_and(ks):
 
 
 def or_clause(ks):
-    return " | ".join(ks) if len(ks) else "ERR"
+    if len(ks):
+        while "False" in ks:
+            ks.remove("False")
+        return " | ".join(ks)
+    return "ERR"
 
 
 def grouped(clause):

@@ -1,5 +1,5 @@
 from lark import Tree
-from operators import ADD, SUB
+from operators import ADD, SUB, OR
 from comparators import EQ, NEQ, LT, LEQ, GT, GEQ
 
 
@@ -53,5 +53,6 @@ class Compiler:
 
     operator_map = {
         "+": ADD,
-        "-": SUB
+        "-": SUB,
+        "|": OR
     }

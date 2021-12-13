@@ -2,10 +2,11 @@ from helpers import or_clause, grouped, and_clause
 
 
 def EQ(left, right):
+    buffer = [[], [], [], [], [], [], [], [], []]
     for i in range(9):
         options = and_clause(left[i], right[i])
-        left[i] = [grouped(or_clause(options))] if len(options) else ["False"]
-    return left
+        buffer[i] = options if len(options) else ["False"]
+    return buffer
 
 
 def NEQ(left, right):
@@ -20,7 +21,7 @@ def LT(left, right, offset=0):
                 options = and_clause(left[j], right[i])
                 buffer[j].extend(options) if len(options) else ["False"]
 
-    return buffer
+    return [list(set(b)) for b in buffer]
 
 
 def LEQ(left, right):
