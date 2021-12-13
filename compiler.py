@@ -1,6 +1,7 @@
 from lark import Tree
 from operators import ADD, SUB, OR
 from comparators import EQ, NEQ, LT, LEQ, GT, GEQ
+from modifiers import NORTH, SOUTH, EAST, WEST, HORIZONTAL, VERTICAL, ORTHO, NE, SE, NW, SW, ANY
 
 
 class Compiler:
@@ -34,7 +35,11 @@ class Compiler:
             return operator(left, right)
 
         elif type == "FIELD":
-            return [[f"{value}{i}"] for i in range(1, 10)]
+            if "." not in value:
+                return [[f"{value}{i}"] for i in range(1, 10)]
+            f, m = value.split(".")
+            fields = self.modifier_map[m](f)
+            return [[f"{f}{i}" if f != "ERR" else "False" for f in fields] for i in range(1, 10)]
         elif type == "NUMBER":
             return [["True"] if i == int(value) else ["False"] for i in range(1, 10)]
         elif type == "OPERATOR":
@@ -55,4 +60,19 @@ class Compiler:
         "+": ADD,
         "-": SUB,
         "|": OR
+    }
+
+    modifier_map = {
+        "north": NORTH,
+        "south": SOUTH,
+        "east": EAST,
+        "west": WEST,
+        "horizontal": HORIZONTAL,
+        "vertical": VERTICAL,
+        "ortho": ORTHO,
+        "ne": NE,
+        "nw": NW,
+        "se": SE,
+        "sw": SW,
+        "any": ANY
     }

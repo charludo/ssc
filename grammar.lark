@@ -9,8 +9,22 @@ expression : value | value OPERATOR expression
 ?value : FIELD
 	   | NUMBER
 
-FIELD : /[a-i][1-9]/
+FIELD : /[a-i][1-9]/ ["." MODIFIER]
 NUMBER : /\d+/
+
+MODIFIER : "north"
+		 | "south"
+		 | "east"
+		 | "west"
+		 | "horizontal"
+		 | "vertical"
+		 | "ortho"
+		 | "ne"
+		 | "nw"
+		 | "se"
+		 | "sw"
+		 | "any"
+
 
 OPERATOR : "+"
 		 | "-"
