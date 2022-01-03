@@ -1,3 +1,4 @@
+from itertools import product
 from helpers import and_clause
 
 
@@ -10,7 +11,12 @@ def EQ(left, right):
 
 
 def NEQ(left, right):
-    return "!" + EQ(left, right)
+    buffer = [[], [], [], [], [], [], [], [], []]
+    combinations = [(i, j) for i, j in product(range(9), range(9)) if i != j]
+    for i, j in combinations:
+        options = and_clause(left[i], right[j])
+        buffer[i].extend(options) if len(options) else ["False"]
+    return buffer
 
 
 def LT(left, right, offset=0):

@@ -29,7 +29,7 @@ if __name__ == "__main__":
             option = [o for o in option if "False" not in o]
             if option:
                 if len(option) > 1:
-                    t.append(grouped(or_clause(option)))
+                    t.append(or_clause(option))
                 else:
                     t.append(or_clause(option))
         output.append(grouped(or_clause(t)))
