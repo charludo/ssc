@@ -1,6 +1,7 @@
 from lark import Lark
 from compiler import Compiler
 from sys import argv
+from globals import init
 from helpers import or_clause, grouped, simple_and
 
 
@@ -14,6 +15,7 @@ def get_parse_tree(code):
 
 
 if __name__ == "__main__":
+    init()
     with open(argv[1], "r") as file:
         code = file.read()
 

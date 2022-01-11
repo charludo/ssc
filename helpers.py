@@ -15,7 +15,6 @@ def make_atomic(clause):
     clause.replace(")", "")
     clause = re.sub(r"\s", "", clause)
     atoms = re.split(r"&|\|", clause)
-    print(atoms)
     return atoms
 
 

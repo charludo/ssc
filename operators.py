@@ -1,5 +1,6 @@
 from itertools import product
 from helpers import and_clause
+import globals
 
 
 def cartesian(func):

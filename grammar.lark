@@ -1,6 +1,8 @@
 %ignore /[ \t\n\f\r]+/
 
-source : (proposition | builtin)+
+source : ["#" ORDER] (proposition | builtin)+
+
+ORDER : NUMBER
 
 proposition : expression COMPARISON (expression | proposition)
 

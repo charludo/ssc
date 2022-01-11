@@ -1,3 +1,4 @@
+import globals
 from lark import Tree
 from operators import ADD, SUB, OR
 from comparators import EQ, NEQ, LT, LEQ, GT, GEQ
@@ -24,6 +25,10 @@ class Compiler:
             for child in children:
                 truths.append(self.visit(child))
             return truths
+
+        elif type == "ORDER":
+            globals.order = int(value)**2
+            return [["True"]]
 
         elif type == "proposition":
             left, comparison, right = [self.visit(child) for child in children]
