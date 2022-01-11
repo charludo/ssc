@@ -2,6 +2,7 @@ from lark import Tree
 from operators import ADD, SUB, OR
 from comparators import EQ, NEQ, LT, LEQ, GT, GEQ
 from modifiers import NORTH, SOUTH, EAST, WEST, HORIZONTAL, VERTICAL, ORTHO, NE, SE, NW, SW, ANY
+from prefixes import DISTINCT
 
 
 class Compiler:
@@ -28,6 +29,10 @@ class Compiler:
             left, comparison, right = [self.visit(child) for child in children]
             return comparison(left, right)
 
+        elif type == "builtin":
+            builtin, *args = [self.visit(child) for child in children]
+            return builtin(args)
+
         elif type == "expression":
             if len(children) == 1:
                 return self.visit(children[0])
@@ -46,6 +51,8 @@ class Compiler:
             return self.operator_map[value]
         elif type == "COMPARISON":
             return self.comparison_map[value]
+        elif type == "PREFIX":
+            return self.prefix_map[value]
 
     comparison_map = {
         "=": EQ,
@@ -75,4 +82,8 @@ class Compiler:
         "se": SE,
         "sw": SW,
         "any": ANY
+    }
+
+    prefix_map = {
+        "!!": DISTINCT
     }

@@ -1,11 +1,14 @@
 %ignore /[ \t\n\f\r]+/
 
-source : proposition+
+source : (proposition | builtin)+
 
 proposition : expression COMPARISON (expression | proposition)
 
 expression : _exp | "(" _exp ")"
 _exp : value | expression OPERATOR expression
+
+builtin : PREFIX (_args | "(" _args ")")
+_args : FIELD [","] (FIELD [","])+
 
 ?value : FIELD
 	   | NUMBER
@@ -37,3 +40,5 @@ COMPARISON : "="
 		   | ">="
 		   | "<="
 		   | "!="
+
+PREFIX : "!!"
