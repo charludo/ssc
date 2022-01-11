@@ -1,6 +1,6 @@
 %ignore /[ \t\n\f\r]+/
 
-source : ["#" ORDER] (proposition | builtin)+
+source : ("#" ORDER)? (proposition | builtin)+
 
 ORDER : NUMBER
 
