@@ -47,6 +47,21 @@ def SUB(left, right):
     return legal_pairs, left
 
 
+@cartesian
+def MULT(left, right):
+    options = list(product(range(left), range(right)))
+    legal_pairs = []
+    for i in range(left * right):
+        vals = []
+        for pair in options:
+            value = (pair[0]+1) * (pair[1]+1)
+            if value == i+1:
+                # print(i-1, pair[0]+1, pair[1]+1)
+                vals.append(pair)
+        legal_pairs.append(vals)
+    return legal_pairs, left*right
+
+
 def OR(left, right):
     left, right = equalize(left, right)
     buffer = []

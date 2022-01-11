@@ -1,6 +1,6 @@
 import settings
 from lark import Tree
-from operators import ADD, SUB, OR
+from operators import ADD, SUB, MULT, OR
 from comparators import EQ, NEQ, LT, LEQ, GT, GEQ
 from modifiers import NORTH, SOUTH, EAST, WEST, HORIZONTAL, VERTICAL, ORTHO, NE, SE, NW, SW, ANY
 from prefixes import DISTINCT
@@ -74,6 +74,7 @@ class Compiler:
     operator_map = {
         "+": ADD,
         "-": SUB,
+        "*": MULT,
         "|": OR
     }
 
