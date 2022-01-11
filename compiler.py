@@ -28,6 +28,7 @@ class Compiler:
 
         elif type == "ORDER":
             settings.ORDER = int(value)**2
+            settings.renew_grid()
             return [["True"]]
 
         elif type == "proposition":

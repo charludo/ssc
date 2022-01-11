@@ -22,7 +22,6 @@ def make_atomic(clause):
 def deconstruct(atom):
     row = re.sub(r"[^a-z]", "", atom)
     col, val = re.sub(r"[a-z]",  "", atom).split("_")
-    print(row, col, val)
     return row, col, val
 
 
@@ -89,5 +88,7 @@ def grouped(clause):
     return f"({clause})" if len(clause) else None
 
 
-def new_buffer():
-    return [[] for _ in range(settings.ORDER)]
+def new_buffer(size=None):
+    if not size:
+        size = settings.ORDER
+    return [[] for _ in range(size)]

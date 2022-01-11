@@ -1,32 +1,69 @@
+import re
 import settings
 
 
-rows = [chr(i+97) if i < 26 else chr(i//26 + 96) + chr((i % 26) + 97) for i in range(settings.ORDER)]
-cols = [str(i+1) for i in range(settings.ORDER)]
+def modify(func):
+    def inner(field):
+        row = re.sub("[^a-z]", "", field)
+        col = re.sub("[a-z]", "", field)
+        return func(row, col)
+    return inner
 
 
-def NORTH(field):
-    if field[0] == "a":
+@modify
+def NORTH(row, col):
+    if row == "a":
         return ["ERR"]
-    return [rows[rows.index(field[0]) - 1] + field[1]]
+    return [settings.rows[settings.rows.index(row) - 1] + col]
 
 
-def SOUTH(field):
-    if field[0] == "i":
+@modify
+def SOUTH(row, col):
+    if row == settings.rows[-1]:
         return ["ERR"]
-    return [rows[rows.index(field[0]) + 1] + field[1]]
+    return [settings.rows[settings.rows.index(row) + 1] + col]
 
 
-def EAST(field):
-    if field[1] == str(settings.ORDER):
+@modify
+def EAST(row, col):
+    if col == str(settings.ORDER):
         return ["ERR"]
-    return [field[0] + cols[cols.index(field[1]) + 1]]
+    return [row + settings.cols[settings.cols.index(col) + 1]]
 
 
-def WEST(field):
-    if field[1] == "1":
+@modify
+def WEST(row, col):
+    if col == settings.rows[-1]:
         return ["ERR"]
-    return [field[0] + cols[cols.index(field[1]) - 1]]
+    return [row + settings.cols[settings.cols.index(col) - 1]]
+
+
+@modify
+def NE(row, col):
+    if row == "a" or col == str(settings.ORDER):
+        return ["ERR"]
+    return [settings.rows[settings.rows.index(row) - 1] + settings.cols[settings.cols.index(col) + 1]]
+
+
+@modify
+def SE(row, col):
+    if row == settings.rows[-1] or col == str(settings.ORDER):
+        return ["ERR"]
+    return [settings.rows[settings.rows.index(row) + 1] + settings.cols[settings.cols.index(col) + 1]]
+
+
+@modify
+def NW(row, col):
+    if row == "a" or col == "1":
+        return ["ERR"]
+    return [settings.rows[settings.rows.index(row) - 1] + settings.cols[settings.cols.index(col) - 1]]
+
+
+@modify
+def SW(row, col):
+    if row == settings.rows[-1] or col == "1":
+        return ["ERR"]
+    return [settings.rows[settings.rows.index(row) + 1] + settings.cols[settings.cols.index(col) - 1]]
 
 
 def HORIZONTAL(field):
@@ -39,30 +76,6 @@ def VERTICAL(field):
 
 def ORTHO(field):
     return [*HORIZONTAL(field), *VERTICAL(field)]
-
-
-def NE(field):
-    if field[0] == "a" or field[1] == str(settings.ORDER):
-        return ["ERR"]
-    return [rows[rows.index(field[0]) - 1] + cols[cols.index(field[1]) + 1]]
-
-
-def SE(field):
-    if field[0] == "i" or field[1] == str(settings.ORDER):
-        return ["ERR"]
-    return [rows[rows.index(field[0]) + 1] + cols[cols.index(field[1]) + 1]]
-
-
-def NW(field):
-    if field[0] == "a" or field[1] == "1":
-        return ["ERR"]
-    return [rows[rows.index(field[0]) - 1] + cols[cols.index(field[1]) - 1]]
-
-
-def SW(field):
-    if field[0] == "i" or field[1] == "1":
-        return ["ERR"]
-    return [rows[rows.index(field[0]) + 1] + cols[cols.index(field[1]) - 1]]
 
 
 def ANY(field):
