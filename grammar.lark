@@ -4,12 +4,13 @@ source : proposition+
 
 proposition : expression COMPARISON (expression | proposition)
 
-expression : value | value OPERATOR expression
+expression : _exp | "(" _exp ")"
+_exp : value | expression OPERATOR expression
 
 ?value : FIELD
 	   | NUMBER
 
-FIELD : /[a-i][1-9]/ ["." MODIFIER]
+FIELD : /[a-i]+[1-9]+/ ["." MODIFIER]
 NUMBER : /\d+/
 
 MODIFIER : "north"
