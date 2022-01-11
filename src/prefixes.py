@@ -1,4 +1,4 @@
-from helpers import new_buffer
+from src.helpers import new_buffer
 
 
 def DISTINCT(*args):

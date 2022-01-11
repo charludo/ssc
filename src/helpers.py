@@ -1,6 +1,6 @@
 import re
 from itertools import product
-import settings
+from src import settings
 
 
 def is_atomic(clause):

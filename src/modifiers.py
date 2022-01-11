@@ -1,5 +1,5 @@
 import re
-import settings
+from src import settings
 
 
 def modify(func):

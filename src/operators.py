@@ -1,6 +1,5 @@
 from itertools import product
-from helpers import and_clause, equalize
-import settings
+from src.helpers import and_clause, equalize
 
 
 def cartesian(func):

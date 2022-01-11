@@ -1,11 +1,12 @@
 from lark import Lark
-from compiler import Compiler
 from sys import argv
-from helpers import or_clause, grouped, simple_and
+from os.path import join, dirname
+from src.compiler import Compiler
+from src.helpers import or_clause, grouped, simple_and
 
 
 def get_parse_tree(code):
-    file = open("grammar.lark", "r")
+    file = open(join(dirname(__file__), "grammar.lark"), "r")
     parser = Lark(file, start="source")
     file.close()
 
@@ -13,7 +14,7 @@ def get_parse_tree(code):
     return tree
 
 
-if __name__ == "__main__":
+def run():
     with open(argv[1], "r") as file:
         code = file.read()
 
@@ -36,3 +37,7 @@ if __name__ == "__main__":
     propositions = simple_and(output)
 
     print(propositions)
+
+
+if __name__ == "__main__":
+    run()

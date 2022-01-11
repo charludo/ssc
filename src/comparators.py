@@ -1,6 +1,6 @@
 from itertools import product
-from helpers import and_clause, new_buffer, equalize
-import settings
+from src.helpers import and_clause, new_buffer, equalize
+from src import settings
 
 
 def EQ(left, right):

@@ -1,9 +1,9 @@
-import settings
+from src import settings
 from lark import Tree
-from operators import ADD, SUB, MULT, OR
-from comparators import EQ, NEQ, LT, LEQ, GT, GEQ
-from modifiers import NORTH, SOUTH, EAST, WEST, HORIZONTAL, VERTICAL, ORTHO, NE, SE, NW, SW, ANY
-from prefixes import DISTINCT
+from src.operators import ADD, SUB, MULT, OR
+from src.comparators import EQ, NEQ, LT, LEQ, GT, GEQ
+from src.modifiers import NORTH, SOUTH, EAST, WEST, HORIZONTAL, VERTICAL, ORTHO, NE, SE, NW, SW, ANY
+from src.prefixes import DISTINCT
 
 
 class Compiler:
