@@ -23,7 +23,11 @@ class Compiler:
         if type == "source":
             truths = []
             for child in children:
-                truths.append(self.visit(child))
+                truth = self.visit(child)
+                if isinstance(truth, dict):
+                    truths.extend(truth["values"])
+                else:
+                    truths.append(truth)
             return truths
 
         elif type == "ORDER":
@@ -33,6 +37,16 @@ class Compiler:
 
         elif type == "proposition":
             left, comparison, right = [self.visit(child) for child in children]
+            if isinstance(left, dict):
+                values = {"values": []}
+                for le in left["values"]:
+                    values["values"].append(comparison(le, right))
+                return values
+            if isinstance(right, dict):
+                values = {"values": []}
+                for ri in right["values"]:
+                    values["values"].append(comparison(left, ri))
+                return values
             return comparison(left, right)
 
         elif type == "builtin":
@@ -44,6 +58,9 @@ class Compiler:
                 return self.visit(children[0])
             left, operator, right = [self.visit(child) for child in children]
             return operator(left, right)
+
+        elif type == "list":
+            return {"values": [self.visit(child) for child in children]}
 
         elif type == "FIELD":
             if "." not in value:

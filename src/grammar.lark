@@ -14,7 +14,9 @@ _args : FIELD [","] (FIELD [","])+
 
 ?value : FIELD
 	   | NUMBER
+	   | list
 
+list : (FIELD [","])+ | "(" (FIELD [","])+ ")"
 FIELD : /[a-z]+[1-9][0-9]*/ ["." MODIFIER]
 NUMBER : /\d+/
 
