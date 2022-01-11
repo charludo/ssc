@@ -1,6 +1,9 @@
+from helpers import new_buffer
+
+
 def DISTINCT(*args):
     fields = [[v[0] for v in field] for arg in args for field in arg]
-    buffer = [[], [], [], [], [], [], [], [], []]
+    buffer = new_buffer()
 
     for i in range(len(fields)):
         left = fields[i]

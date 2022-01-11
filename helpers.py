@@ -1,5 +1,6 @@
 import re
 from itertools import product
+import settings
 
 
 def is_atomic(clause):
@@ -88,3 +89,7 @@ def grouped(clause):
     if is_atomic(clause):
         return clause
     return f"({clause})" if len(clause) else None
+
+
+def new_buffer():
+    return [[] for _ in range(settings.ORDER)]

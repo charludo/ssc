@@ -1,15 +1,15 @@
 from itertools import product
 from helpers import and_clause
-import globals
+import settings
 
 
 def cartesian(func):
     def inner(left, right):
-        cartesian_indeces = list(product(range(9), range(9)))
+        cartesian_indeces = list(product(range(settings.ORDER), range(settings.ORDER)))
         value_map = func(cartesian_indeces)
 
         values = []
-        for i in range(9):
+        for i in range(settings.ORDER):
             vals = []
             for pair in value_map[i]:
                 vals.extend(and_clause(left[pair[0]], right[pair[1]]))
@@ -23,7 +23,7 @@ def cartesian(func):
 @cartesian
 def ADD(options):
     legal_pairs = []
-    for i in range(9):
+    for i in range(settings.ORDER):
         vals = []
         for pair in options:
             value = pair[0] + pair[1]
@@ -36,7 +36,7 @@ def ADD(options):
 @cartesian
 def SUB(options):
     legal_pairs = []
-    for i in range(9):
+    for i in range(settings.ORDER):
         vals = []
         for pair in options:
             value = pair[0] - pair[1]
@@ -48,7 +48,7 @@ def SUB(options):
 
 def OR(left, right):
     buffer = []
-    for i in range(9):
+    for i in range(settings.ORDER):
         combined = set([*left[i], *right[i]])
         if len(combined) > 1:
             combined.discard("False")

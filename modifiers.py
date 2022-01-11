@@ -1,5 +1,8 @@
-rows = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
-cols = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
+import settings
+
+
+rows = [chr(i+97) if i < 26 else chr(i//26 + 96) + chr((i % 26) + 97) for i in range(settings.ORDER)]
+cols = [str(i+1) for i in range(settings.ORDER)]
 
 
 def NORTH(field):
@@ -15,7 +18,7 @@ def SOUTH(field):
 
 
 def EAST(field):
-    if field[1] == "9":
+    if field[1] == str(settings.ORDER):
         return ["ERR"]
     return [field[0] + cols[cols.index(field[1]) + 1]]
 
@@ -39,13 +42,13 @@ def ORTHO(field):
 
 
 def NE(field):
-    if field[0] == "a" or field[1] == "9":
+    if field[0] == "a" or field[1] == str(settings.ORDER):
         return ["ERR"]
     return [rows[rows.index(field[0]) - 1] + cols[cols.index(field[1]) + 1]]
 
 
 def SE(field):
-    if field[0] == "i" or field[1] == "9":
+    if field[0] == "i" or field[1] == str(settings.ORDER):
         return ["ERR"]
     return [rows[rows.index(field[0]) + 1] + cols[cols.index(field[1]) + 1]]
 

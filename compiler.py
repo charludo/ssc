@@ -1,4 +1,4 @@
-import globals
+import settings
 from lark import Tree
 from operators import ADD, SUB, OR
 from comparators import EQ, NEQ, LT, LEQ, GT, GEQ
@@ -27,7 +27,7 @@ class Compiler:
             return truths
 
         elif type == "ORDER":
-            globals.order = int(value)**2
+            settings.ORDER = int(value)**2
             return [["True"]]
 
         elif type == "proposition":
@@ -46,12 +46,12 @@ class Compiler:
 
         elif type == "FIELD":
             if "." not in value:
-                return [[f"{value}{i}"] for i in range(1, 10)]
+                return [[f"{value}{i}"] for i in range(1, settings.ORDER+1)]
             f, m = value.split(".")
             fields = self.modifier_map[m](f)
-            return [[f"{f}{i}" if f != "ERR" else "False" for f in fields] for i in range(1, 10)]
+            return [[f"{f}{i}" if f != "ERR" else "False" for f in fields] for i in range(1, settings.ORDER+1)]
         elif type == "NUMBER":
-            return [["True"] if i == int(value) else ["False"] for i in range(1, 10)]
+            return [["True"] if i == int(value) else ["False"] for i in range(1, settings.ORDER+1)]
         elif type == "OPERATOR":
             return self.operator_map[value]
         elif type == "COMPARISON":
