@@ -1,3 +1,4 @@
+import re
 from itertools import product
 
 
@@ -6,6 +7,36 @@ def is_atomic(clause):
         return False
     if "&" in clause or "|" in clause:
         return False
+    return True
+
+
+def make_atomic(clause):
+    clause.replace("(", "")
+    clause.replace(")", "")
+    clause = re.sub(r"\s", "", clause)
+    atoms = re.split(r"&|\|", clause)
+    return atoms
+
+
+def deconstruct(atom):
+    v_l = len(re.sub('[^0-9]', '', atom)) // 2
+    r_l = len(re.sub('[0-9]', '', atom))
+    row = atom[:r_l]
+    col = atom[r_l:r_l+v_l]
+    val = atom[-v_l:]
+    return row, col, val
+
+
+def is_allowed(left, right):
+    row, col, val = deconstruct(left)
+    atoms = make_atomic(right)
+
+    for a in atoms:
+        r, c, v = deconstruct(a)
+        if (row == r and val == v) or \
+           (col == c and val == v) or \
+           (row == r and col == c and val != v):
+            return False
     return True
 
 
@@ -22,6 +53,8 @@ def and_clause(left, right):
             variant = ["False"]
         elif "True" in variant:
             variant.remove("True")
+        elif not is_allowed(*variant):
+            continue
         if len(variant) > 1:
             finished.append(" & ".join(variant))
         else:
