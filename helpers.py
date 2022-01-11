@@ -92,3 +92,11 @@ def new_buffer(size=None):
     if not size:
         size = settings.ORDER
     return [[] for _ in range(size)]
+
+
+def equalize(left, right):
+    while len(left) < len(right):
+        left.append(["False"])
+    while len(right) < len(left):
+        right.append(["False"])
+    return left, right

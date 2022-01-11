@@ -52,7 +52,9 @@ class Compiler:
             fields = self.modifier_map[m](f)
             return [[f"{f}_{i}" if f != "ERR" else "False" for f in fields] for i in range(1, settings.ORDER+1)]
         elif type == "NUMBER":
-            return [["True"] if i == int(value) else ["False"] for i in range(1, settings.ORDER+1)]
+            num = [["False"] for i in range(1, int(value))]
+            num.append(["True"])
+            return num
         elif type == "OPERATOR":
             return self.operator_map[value]
         elif type == "COMPARISON":

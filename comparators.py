@@ -1,19 +1,24 @@
 from itertools import product
-from helpers import and_clause, new_buffer
+from helpers import and_clause, new_buffer, equalize
 import settings
 
 
 def EQ(left, right):
-    buffer = new_buffer()
-    for i in range(settings.ORDER):
+    len_left = len(left)
+    buffer = new_buffer(len_left)
+    left, right = equalize(left, right)
+    for i in range(len_left):
         options = and_clause(left[i], right[i])
         buffer[i] = options if len(options) else ["False"]
     return buffer
 
 
 def NEQ(left, right):
-    buffer = new_buffer()
-    combinations = [(i, j) for i, j in product(range(settings.ORDER), range(settings.ORDER)) if i != j]
+    len_left = len(left)
+    len_right = len(right)
+    buffer = new_buffer(len_left)
+    left, right = equalize(left, right)
+    combinations = [(i, j) for i, j in product(range(len_left), range(len_right)) if i != j]
     for i, j in combinations:
         options = and_clause(left[i], right[j])
         buffer[i].extend(options) if len(options) else ["False"]
@@ -21,8 +26,10 @@ def NEQ(left, right):
 
 
 def LT(left, right, offset=0):
-    buffer = new_buffer()
-    for i in range(1-offset, settings.ORDER):
+    len_right = len(right)
+    buffer = new_buffer(len_right)
+    left, right = equalize(left, right)
+    for i in range(1-offset, len_right):
         if right[i] != ["False"]:
             for j in range(0, i+offset):
                 options = and_clause(left[j], right[i])
@@ -36,8 +43,10 @@ def LEQ(left, right):
 
 
 def GT(left, right, offset=1):
-    buffer = new_buffer()
-    for i in range(offset, settings.ORDER):
+    len_left = len(left)
+    buffer = new_buffer(len_left)
+    left, right = equalize(left, right)
+    for i in range(offset, len_left):
         if right[i] != ["False"]:
             for j in range(i+offset, settings.ORDER):
                 options = and_clause(left[j], right[i])
