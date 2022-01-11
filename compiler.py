@@ -46,10 +46,10 @@ class Compiler:
 
         elif type == "FIELD":
             if "." not in value:
-                return [[f"{value}{i}"] for i in range(1, settings.ORDER+1)]
+                return [[f"{value}_{i}"] for i in range(1, settings.ORDER+1)]
             f, m = value.split(".")
             fields = self.modifier_map[m](f)
-            return [[f"{f}{i}" if f != "ERR" else "False" for f in fields] for i in range(1, settings.ORDER+1)]
+            return [[f"{f}_{i}" if f != "ERR" else "False" for f in fields] for i in range(1, settings.ORDER+1)]
         elif type == "NUMBER":
             return [["True"] if i == int(value) else ["False"] for i in range(1, settings.ORDER+1)]
         elif type == "OPERATOR":

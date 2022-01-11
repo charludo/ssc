@@ -20,11 +20,9 @@ def make_atomic(clause):
 
 
 def deconstruct(atom):
-    v_l = len(re.sub('[^0-9]', '', atom)) // 2
-    r_l = len(re.sub('[0-9]', '', atom))
-    row = atom[:r_l]
-    col = atom[r_l:r_l+v_l]
-    val = atom[-v_l:]
+    row = re.sub(r"[^a-z]", "", atom)
+    col, val = re.sub(r"[a-z]",  "", atom).split("_")
+    print(row, col, val)
     return row, col, val
 
 
