@@ -28,15 +28,17 @@ def deconstruct(atom):
 
 
 def is_allowed(left, right):
-    row, col, val = deconstruct(left)
-    atoms = make_atomic(right)
+    atoms_l = make_atomic(left)
+    atoms_r = make_atomic(right)
 
-    for a in atoms:
-        r, c, v = deconstruct(a)
-        if (row == r and val == v) or \
-           (col == c and val == v) or \
-           (row == r and col == c and val != v):
-            return False
+    for a_l in atoms_l:
+        row, col, val = deconstruct(a_l)
+        for a in atoms_r:
+            r, c, v = deconstruct(a)
+            if (row == r and val == v) or \
+               (col == c and val == v) or \
+               (row == r and col == c and val != v):
+                return False
     return True
 
 
