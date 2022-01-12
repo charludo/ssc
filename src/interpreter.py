@@ -5,20 +5,33 @@ from src import settings
 
 
 def solve(path):
-    satisfiable = True
     base = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
-    p = subprocess.Popen(os.path.join(base, f"limboole1.2/limboole -s {path}"), stdout=subprocess.PIPE, shell=True)
-    (output, error) = p.communicate()
-    p.wait()
+    satisfiable = True
+    i = 0
+    while satisfiable:
+        p = subprocess.Popen(os.path.join(base, f"limboole1.2/limboole -s {path}"), stdout=subprocess.PIPE, shell=True)
+        (output, error) = p.communicate()
+        p.wait()
 
-    if "UNSATISFIABLE formula" in str(output):
-        satisfiable = False
-        print("UNSATISFIABLE")
-        return
+        if "UNSATISFIABLE formula" in str(output):
+            satisfiable = False
+            continue
 
-    solution, prefills = extract_solution(str(output))
-    prettify(solution)
+        solution, prefills = extract_solution(str(output))
+        i += 1
+        print(f"Solution #{i}:")
+        prettify(solution)
 
+        prefills = f" & !({' & '.join(prefills)})"
+        with open(path, "a") as file:
+            file.write(prefills)
+
+    if i == 0:
+        print("Sudoku is unsatisfiable.")
+    elif i == 1:
+        print("Sudoku is uniquely solvable. No further solutions exist.")
+    else:
+        print(f"No further solutions exist. Total number of solutions: {i}")
 
 def extract_solution(output):
     output = output.replace(r"\n", "\n")
