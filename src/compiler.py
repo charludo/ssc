@@ -24,30 +24,21 @@ class Compiler:
             truths = []
             for child in children:
                 truth = self.visit(child)
-                if isinstance(truth, dict):
-                    truths.extend(truth["values"])
-                else:
-                    truths.append(truth)
+                truths.extend(truth)
             return truths
 
         elif type == "ORDER":
             settings.ORDER = int(value)**2
             settings.renew_grid()
-            return [["True"]]
+            return [[["True"]]]
 
         elif type == "proposition":
             left, comparison, right = [self.visit(child) for child in children]
-            if isinstance(left, dict):
-                values = {"values": []}
-                for le in left["values"]:
-                    values["values"].append(comparison(le, right))
-                return values
-            if isinstance(right, dict):
-                values = {"values": []}
-                for ri in right["values"]:
-                    values["values"].append(comparison(left, ri))
-                return values
-            return comparison(left, right)
+            results = []
+            for i in left:
+                for j in right:
+                    results.append(comparison(i, j))
+            return results
 
         elif type == "builtin":
             builtin, *args = [self.visit(child) for child in children]
@@ -55,23 +46,32 @@ class Compiler:
 
         elif type == "expression":
             if len(children) == 1:
-                return self.visit(children[0])
+                a = self.visit(children[0])
+                print(a)
+                return a
             left, operator, right = [self.visit(child) for child in children]
-            return operator(left, right)
+            results = []
+            for i in left:
+                for j in right:
+                    results.append(operator(i, j))
+            return results
 
         elif type == "list":
-            return {"values": [self.visit(child) for child in children]}
+            values = []
+            for child in children:
+                values.extend(self.visit(child))
+            return values
 
         elif type == "FIELD":
             if "." not in value:
-                return [[f"{value}_{i}"] for i in range(1, settings.ORDER+1)]
+                return [[[f"{value}_{i}"] for i in range(1, settings.ORDER+1)]]
             f, m = value.split(".")
             fields = self.modifier_map[m](f)
-            return [[f"{f}_{i}" if f != "ERR" else "False" for f in fields] for i in range(1, settings.ORDER+1)]
+            return [[[f"{f}_{i}" if f != "ERR" else "False" for f in fields] for i in range(1, settings.ORDER+1)]]
         elif type == "NUMBER":
             num = [["False"] for i in range(1, int(value))]
             num.append(["True"])
-            return num
+            return [num]
         elif type == "OPERATOR":
             return self.operator_map[value]
         elif type == "COMPARISON":
