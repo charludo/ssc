@@ -46,9 +46,7 @@ class Compiler:
 
         elif type == "expression":
             if len(children) == 1:
-                a = self.visit(children[0])
-                print(a)
-                return a
+                return self.visit(children[0])
             left, operator, right = [self.visit(child) for child in children]
             results = []
             for i in left:

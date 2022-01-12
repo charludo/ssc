@@ -1,4 +1,6 @@
 %ignore /[ \t\n\f\r]+/
+COMMENT: "--" /[^\n]/*
+%ignore COMMENT
 
 source : ("#" ORDER)? (proposition | builtin)+
 
