@@ -1,7 +1,7 @@
 from src import settings
 from lark import Tree
 from src.operators import ADD, SUB, MULT, OR
-from src.comparators import EQ, NEQ, LT, LEQ, GT, GEQ
+from src.comparators import EQ, NEQ, LT, LEQ, GT, GEQ, POR
 from src.modifiers import NORTH, SOUTH, EAST, WEST, HORIZONTAL, VERTICAL, ORTHO, NE, SE, NW, SW, ANY
 from src.prefixes import DISTINCT
 
@@ -25,6 +25,7 @@ class Compiler:
             for child in children:
                 truth = self.visit(child)
                 truths.extend(truth)
+            # print(truths)
             return truths
 
         elif type == "ORDER":
@@ -83,7 +84,8 @@ class Compiler:
         ">": GT,
         "<=": LEQ,
         ">=": GEQ,
-        "!=": NEQ
+        "!=": NEQ,
+        "||": POR
     }
 
     operator_map = {

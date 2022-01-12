@@ -13,6 +13,8 @@ def solve(path):
 
     if "UNSATISFIABLE formula" in str(output):
         satisfiable = False
+        print("UNSATISFIABLE")
+        return
 
     solution, prefills = extract_solution(str(output))
     prettify(solution)

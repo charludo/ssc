@@ -100,3 +100,21 @@ def equalize(left, right):
     while len(right) < len(left):
         right.append(["False"])
     return left, right
+
+
+def reduce(propositions, mode="and"):
+    output = []
+    for truth in propositions:
+        t = []
+        for option in truth:
+            option = [o for o in option if "False" not in o]
+            if option:
+                if len(option) > 1:
+                    t.append(or_clause(option))
+                else:
+                    t.append(or_clause(option))
+        output.append(grouped(or_clause(t)))
+    if mode == "and":
+        return simple_and(output)
+    elif mode == "or":
+        return or_clause(output)

@@ -5,7 +5,7 @@ from os.path import join, dirname
 from src.compiler import Compiler
 from src.interpreter import solve
 from src.base_rules import get_base_rules
-from src.helpers import or_clause, grouped, simple_and
+from src.helpers import reduce
 
 
 def get_parse_tree(code):
@@ -32,18 +32,7 @@ def run(filename, view, minimal, interpret, base):
 
     propositions = compiler.get_propositions()
     # print(propositions)
-    output = []
-    for truth in propositions:
-        t = []
-        for option in truth:
-            option = [o for o in option if "False" not in o]
-            if option:
-                if len(option) > 1:
-                    t.append(or_clause(option))
-                else:
-                    t.append(or_clause(option))
-        output.append(grouped(or_clause(t)))
-    propositions = simple_and(output)
+    propositions = reduce(propositions)
 
     if view:
         print(propositions)

@@ -3,7 +3,7 @@ blueprints/devroot/config.yaml
 barely/tests/ref/backups/backups/
 barely/tests/ref/backups/webroot/
 barely/tests/ref/backups/devroot/
-
+*.sat
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

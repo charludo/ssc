@@ -6,7 +6,8 @@ source : ("#" ORDER)? (proposition | builtin)+
 
 ORDER : NUMBER
 
-proposition : expression COMPARISON (expression | proposition)
+proposition : _prop | "(" _prop ")"
+_prop : (expression | proposition) COMPARISON (expression | proposition)
 
 expression : _exp | "(" _exp ")"
 _exp : value | expression OPERATOR expression
@@ -18,7 +19,7 @@ _args : FIELD [","] (FIELD [","])+
 	   | NUMBER
 	   | list
 
-list : (expression [","])+ | "(" (expression [","])+ ")"
+list : "(" (expression [","])+ ")"
 FIELD : /[a-z]+[1-9][0-9]*/ ["." MODIFIER]
 NUMBER : /\d+/
 
@@ -47,5 +48,6 @@ COMPARISON : "="
 		   | ">="
 		   | "<="
 		   | "!="
+		   | "||"
 
 PREFIX : "!!"

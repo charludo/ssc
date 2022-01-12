@@ -1,5 +1,5 @@
 from itertools import product
-from src.helpers import and_clause, new_buffer, equalize
+from src.helpers import and_clause, new_buffer, equalize, reduce
 from src import settings
 
 
@@ -57,3 +57,7 @@ def GT(left, right, offset=1):
 
 def GEQ(left, right):
     return GT(left, right, offset=0)
+
+
+def POR(left, right):
+    return [[reduce([left, right], mode="or")]]
