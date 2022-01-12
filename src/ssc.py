@@ -1,7 +1,9 @@
+import click
 from lark import Lark
-from sys import argv
+from pathlib import Path
 from os.path import join, dirname
 from src.compiler import Compiler
+from src.base_rules import get_base_rules
 from src.helpers import or_clause, grouped, simple_and
 
 
@@ -14,8 +16,14 @@ def get_parse_tree(code):
     return tree
 
 
-def run():
-    with open(argv[1], "r") as file:
+@click.command()
+@click.option("--base", "-b", help="specify file from which to read base rules")
+@click.option("--minimal", "-m", help="do not append base rules", is_flag=True)
+@click.option("--solve", "-s", help="apply limboole to compiled file and display result")
+@click.option("--view", "-v", help="print compiled formula to console (excluding base rules)", is_flag=True)
+@click.argument("filename")
+def run(filename, view, solve, minimal, base):
+    with open(filename, "r") as file:
         code = file.read()
 
     tree = get_parse_tree(code)
@@ -36,7 +44,14 @@ def run():
         output.append(grouped(or_clause(t)))
     propositions = simple_and(output)
 
-    print(propositions)
+    if view:
+        print(propositions)
+
+    if not minimal:
+        get_base_rules()
+
+    with open(Path(filename).stem + ".sat", "w") as file:
+        file.write(propositions)
 
 
 if __name__ == "__main__":

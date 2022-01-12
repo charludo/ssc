@@ -5,6 +5,7 @@ setuptools.setup(name='ssc',
                  include_package_data=True,
                  entry_points={"console_scripts": ["ssc = src.ssc:run"]},
                  install_requires=[
-                    "lark==1.0.0"
+                    "lark>=1.0.0",
+                    "click>=8.0.3"
                  ]
                  )
