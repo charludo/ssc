@@ -3,6 +3,7 @@ from lark import Lark
 from pathlib import Path
 from os.path import join, dirname
 from src.compiler import Compiler
+from src.interpreter import solve
 from src.base_rules import get_base_rules
 from src.helpers import or_clause, grouped, simple_and
 
@@ -18,11 +19,11 @@ def get_parse_tree(code):
 
 @click.command()
 @click.option("--base", "-b", help="specify file from which to read base rules")
+@click.option("--interpret", "-i", help="apply limboole to compiled file and display result", is_flag=True)
 @click.option("--minimal", "-m", help="do not append base rules", is_flag=True)
-@click.option("--solve", "-s", help="apply limboole to compiled file and display result")
 @click.option("--view", "-v", help="print compiled formula to console (excluding base rules)", is_flag=True)
 @click.argument("filename")
-def run(filename, view, solve, minimal, base):
+def run(filename, view, minimal, interpret, base):
     with open(filename, "r") as file:
         code = file.read()
 
@@ -47,11 +48,20 @@ def run(filename, view, solve, minimal, base):
     if view:
         print(propositions)
 
-    if not minimal:
-        get_base_rules()
+    if not minimal and not base:
+        propositions += " & True & !ERR & " + get_base_rules()
 
-    with open(Path(filename).stem + ".sat", "w") as file:
+    if base:
+        with open(base, "r") as file:
+            base_rules = file.read()
+        propositions += " & True & !ERR & " + base_rules
+
+    outpath = Path(filename).stem + ".sat"
+    with open(outpath, "w") as file:
         file.write(propositions)
+
+    if interpret:
+        solve(outpath)
 
 
 if __name__ == "__main__":
