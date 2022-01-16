@@ -33,6 +33,7 @@ def solve(path):
     else:
         print(f"No further solutions exist. Total number of solutions: {i}")
 
+
 def extract_solution(output):
     output = output.replace(r"\n", "\n")
     solution = ["."] * settings.ORDER**2

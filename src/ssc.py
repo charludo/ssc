@@ -1,7 +1,8 @@
 import click
 from lark import Lark
 from pathlib import Path
-from os.path import join, dirname
+from humanize import naturalsize
+from os.path import join, dirname, getsize
 from src.compiler import Compiler
 from src.interpreter import solve
 from src.base_rules import get_base_rules
@@ -48,6 +49,9 @@ def run(filename, view, minimal, interpret, base):
     outpath = Path(filename).stem + ".sat"
     with open(outpath, "w") as file:
         file.write(propositions)
+
+    print("done compiling.")
+    print("compiled file size: ", naturalsize(getsize(outpath)))
 
     if interpret:
         solve(outpath)

@@ -33,8 +33,8 @@ def is_allowed(left, right):
         row, col, val = deconstruct(a_l)
         for a in atoms_r:
             r, c, v = deconstruct(a)
-            if (row == r and val == v) or \
-               (col == c and val == v) or \
+            if (row == r and val == v and col != c) or \
+               (col == c and val == v and row != r) or \
                (row == r and col == c and val != v):
                 return False
     return True
