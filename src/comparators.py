@@ -46,7 +46,7 @@ def GT(left, right, offset=1):
     len_left = len(left)
     buffer = new_buffer(len_left)
     left, right = equalize(left, right)
-    for i in range(offset, len_left):
+    for i in range(0, len_left):
         if right[i] != ["False"]:
             for j in range(i+offset, settings.ORDER):
                 options = and_clause(left[j], right[i])
