@@ -73,7 +73,7 @@ class Compiler:
             return [num]
         elif type == "OPERATOR":
             return self.operator_map[value]
-        elif type == "COMPARISON":
+        elif type == "COMPARATOR":
             return self.comparison_map[value]
         elif type == "PREFIX":
             return self.prefix_map[value]

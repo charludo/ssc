@@ -7,7 +7,7 @@ source : ("#" ORDER)? (proposition | builtin)+
 ORDER : NUMBER
 
 proposition : _prop | "(" _prop ")"
-_prop : (expression | proposition) COMPARISON (expression | proposition)
+_prop : (expression | proposition) COMPARATOR (expression | proposition)
 
 expression : _exp | "(" _exp ")"
 _exp : value | expression OPERATOR expression
@@ -42,7 +42,7 @@ OPERATOR : "+"
 		 | "|"
 		 | "*"
 
-COMPARISON : "="
+COMPARATOR : "="
 		   | ">"
 		   | "<"
 		   | ">="
