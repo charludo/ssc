@@ -61,7 +61,7 @@ class Compiler:
                 values.extend(self.visit(child))
             return values
 
-        elif type == "FIELD":
+        elif type == "CELL":
             if "." not in value:
                 return [[[f"{value}_{i}"] for i in range(1, settings.ORDER+1)]]
             f, m = value.split(".")

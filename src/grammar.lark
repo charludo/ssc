@@ -13,14 +13,14 @@ expression : _exp | "(" _exp ")"
 _exp : value | expression OPERATOR expression
 
 builtin : PREFIX (_args | "(" _args ")")
-_args : FIELD [","] (FIELD [","])+
+_args : CELL [","] (CELL [","])+
 
-?value : FIELD
+?value : CELL
 	   | NUMBER
 	   | list
 
 list : "(" (expression [","])+ ")"
-FIELD : /[a-z]+[1-9][0-9]*/ ["." MODIFIER]
+CELL : /[a-z]+[1-9][0-9]*/ ["." MODIFIER]
 NUMBER : /\d+/
 
 MODIFIER : "north"
