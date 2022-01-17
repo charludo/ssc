@@ -2,7 +2,7 @@ from itertools import product
 from src.helpers import and_clause, equalize
 
 
-def cartesian(func):
+def operate(func):
     def inner(left, right):
         value_map, max_len = func(len(left), len(right))
         left, right = equalize(left, right)
@@ -18,7 +18,7 @@ def cartesian(func):
     return inner
 
 
-@cartesian
+@operate
 def ADD(left, right):
     options = list(product(range(left), range(right)))
     legal_pairs = []
@@ -32,7 +32,7 @@ def ADD(left, right):
     return legal_pairs, left+right
 
 
-@cartesian
+@operate
 def SUB(left, right):
     options = list(product(range(left), range(left)))
     legal_pairs = []
@@ -46,7 +46,7 @@ def SUB(left, right):
     return legal_pairs, left
 
 
-@cartesian
+@operate
 def MULT(left, right):
     options = list(product(range(left), range(right)))
     legal_pairs = []
