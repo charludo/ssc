@@ -21,7 +21,7 @@ def NEQ(left, right):
     combinations = [(i, j) for i, j in product(range(len_left), range(len_right)) if i != j]
     for i, j in combinations:
         options = and_clause(left[i], right[j])
-        buffer[i].extend(options) if len(options) else ["False"]
+        buffer[i].extend(options if len(options) else ["False"])
     return buffer
 
 
@@ -33,7 +33,7 @@ def LT(left, right, offset=0):
         if right[i] != ["False"]:
             for j in range(0, i+offset):
                 options = and_clause(left[j], right[i])
-                buffer[j].extend(options) if len(options) else ["False"]
+                buffer[j].extend(options if len(options) else ["False"])
 
     return [list(set(b)) for b in buffer]
 
@@ -50,7 +50,7 @@ def GT(left, right, offset=1):
         if right[i] != ["False"]:
             for j in range(i+offset, settings.ORDER):
                 options = and_clause(left[j], right[i])
-                buffer[j].extend(options) if len(options) else ["False"]
+                buffer[j].extend(options if len(options) else ["False"])
 
     return buffer
 
