@@ -4,7 +4,7 @@ import subprocess
 from src import settings
 
 
-def solve(path):
+def solve(path, tex):
     base = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
     satisfiable = True
     i = 0
@@ -20,7 +20,10 @@ def solve(path):
         solution, prefills = extract_solution(str(output))
         i += 1
         print(f"Solution #{i}:")
-        prettify(solution)
+        if tex:
+            texify(solution)
+        else:
+            prettify(solution)
 
         prefills = f" & !({' & '.join(prefills)})"
         with open(path, "a") as file:
@@ -58,6 +61,13 @@ def extract_solution(output):
         prefills.append(f"{i}{j}_{k}")
 
     return solution, prefills
+
+
+def texify(solution):
+    solution = [solution[i::9] for i in range(9)]
+    for s in solution:
+        print("|" + "|".join(s) + "|")
+    print()
 
 
 def prettify(solution):

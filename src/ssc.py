@@ -26,9 +26,10 @@ def get_parse_tree(code):
 @click.option("--interpret", "-i", help="apply limboole to compiled file and display result", is_flag=True)
 @click.option("--minimal", "-m", help="do not append base rules", is_flag=True)
 @click.option("--report", "-r", help="report on compilation and evaluation times. argument sets number of timing processes.", required=False, type=int)
+@click.option("--tex", "-t", help="output solutions in LaTeX format", is_flag=True)
 @click.option("--view", "-v", help="print compiled formula to console (excluding base rules)", is_flag=True)
 @click.argument("filename")
-def run(filename, view, report, minimal, interpret, base):
+def run(filename, view, tex, report, minimal, interpret, base):
     with open(filename, "r") as file:
         code = file.read()
 
@@ -66,7 +67,7 @@ def run(filename, view, report, minimal, interpret, base):
         print("Average evaluation time: ", str(timedelta(seconds=avg)))
 
     if interpret:
-        solve(outpath)
+        solve(outpath, tex)
 
 
 if __name__ == "__main__":
