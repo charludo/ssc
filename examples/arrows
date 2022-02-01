@@ -1,0 +1,21 @@
+-- Arrow Sudoku by Eric Fox
+-- https://app.crackingthecryptic.com/sudoku/DGT6HQ46FN
+
+# 3
+-- single-digit arrows
+b7 = a7 + a6
+b7 = b6 + b5 + b4
+
+c6 = d6 + e6 + f6
+f7 = g6 + h6
+g1 = f2 + e2
+
+h2 = g3 + g4 + g5
+h5 = h4 + h3
+
+-- double-digit arrows
+(10 * c1) + c2 = d1 + d2 + d3 + e4
+(10 * c4) + c5 = d5 + d4 + e3 + f3
+(10 * c7) + c8 = c9 + b9
+-- note: i9 + i8 + i7 + i6 + i5 + i4 + i3 + i2 + i1 is always equal to 45; otherwise not finished after 12m
+(10 * f8) + f9 = g8 + h9 + 45 + h1

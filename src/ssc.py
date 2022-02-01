@@ -1,10 +1,13 @@
 import click
+import timeit
 from lark import Lark
+from os import environ
 from pathlib import Path
+from datetime import timedelta
 from humanize import naturalsize
 from os.path import join, dirname, getsize
 from src.compiler import Compiler
-from src.interpreter import solve
+from src.interpreter import solve, solve_test
 from src.base_rules import get_base_rules
 from src.helpers import reduce
 
@@ -22,9 +25,10 @@ def get_parse_tree(code):
 @click.option("--base", "-b", help="specify file from which to read base rules")
 @click.option("--interpret", "-i", help="apply limboole to compiled file and display result", is_flag=True)
 @click.option("--minimal", "-m", help="do not append base rules", is_flag=True)
+@click.option("--report", "-r", help="report on compilation and evaluation times", is_flag=True)
 @click.option("--view", "-v", help="print compiled formula to console (excluding base rules)", is_flag=True)
 @click.argument("filename")
-def run(filename, view, minimal, interpret, base):
+def run(filename, view, report, minimal, interpret, base):
     with open(filename, "r") as file:
         code = file.read()
 
@@ -51,7 +55,15 @@ def run(filename, view, minimal, interpret, base):
         file.write(propositions)
 
     print("done compiling.")
-    print("compiled file size: ", naturalsize(getsize(outpath)))
+    print("compiled file size:      ", naturalsize(getsize(outpath)))
+
+    if report:
+        environ["outpath"] = outpath
+        # print("Performing timing measurements...")
+        avg = timeit.timeit(compiler.get_propositions, number=100)/100
+        print("Average compile time:    ", str(timedelta(seconds=avg)))
+        avg = timeit.timeit(solve_test, number=100)/100
+        print("Average evaluation time: ", str(timedelta(seconds=avg)))
 
     if interpret:
         solve(outpath)

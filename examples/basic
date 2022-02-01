@@ -1,0 +1,26 @@
+# 2
+-- minimal encoding for 4x4 Sudokus
+
+-- every cell has a value
+(a1, a2, a3, a4, b1, b2, b3, b4, c1, c2, c3, c4, d1, d2, d3, d4) = 1 | 2 | 3 | 4
+
+-- no duplicates in rows
+!! a1, a2, a3, a4
+!! b1, b2, b3, b4
+!! c1, c2, c3, c4
+!! d1, d2, d3, d4
+
+-- no duplicates in columns
+!! a1, b1, c1, d1
+!! a2, b2, c2, d2
+!! a3, b3, c3, d3
+!! a4, b4, c4, d4
+
+-- no duplicates in areas
+!! a1, a2, b1, b2
+!! a3, a4, b3, b4
+!! c1, c2, d1, d2
+!! c3, c4, d3, d4
+
+-- at most one value per cell: implied by other rules
+-- numbers 1 through 4 in every row/col/area: implied by other rules

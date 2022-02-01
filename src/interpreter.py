@@ -34,6 +34,16 @@ def solve(path):
         print(f"No further solutions exist. Total number of solutions: {i}")
 
 
+def solve_test():
+    path = os.environ["outpath"]
+    base = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+    p = subprocess.Popen(os.path.join(base, f"limboole1.2/limboole -s {path}"), stdout=subprocess.PIPE, shell=True)
+    (output, error) = p.communicate()
+    p.wait()
+
+    solution, prefills = extract_solution(str(output))
+
+
 def extract_solution(output):
     output = output.replace(r"\n", "\n")
     solution = ["."] * settings.ORDER**2
