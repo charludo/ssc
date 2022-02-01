@@ -25,7 +25,7 @@ def get_parse_tree(code):
 @click.option("--base", "-b", help="specify file from which to read base rules")
 @click.option("--interpret", "-i", help="apply limboole to compiled file and display result", is_flag=True)
 @click.option("--minimal", "-m", help="do not append base rules", is_flag=True)
-@click.option("--report", "-r", help="report on compilation and evaluation times", is_flag=True)
+@click.option("--report", "-r", help="report on compilation and evaluation times. argument sets number of timing processes.", required=False, type=int)
 @click.option("--view", "-v", help="print compiled formula to console (excluding base rules)", is_flag=True)
 @click.argument("filename")
 def run(filename, view, report, minimal, interpret, base):
@@ -60,9 +60,9 @@ def run(filename, view, report, minimal, interpret, base):
     if report:
         environ["outpath"] = outpath
         # print("Performing timing measurements...")
-        avg = timeit.timeit(compiler.get_propositions, number=100)/100
+        avg = timeit.timeit(compiler.get_propositions, number=report)/report
         print("Average compile time:    ", str(timedelta(seconds=avg)))
-        avg = timeit.timeit(solve_test, number=100)/100
+        avg = timeit.timeit(solve_test, number=report)/report
         print("Average evaluation time: ", str(timedelta(seconds=avg)))
 
     if interpret:
