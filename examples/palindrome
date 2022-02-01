@@ -1,0 +1,42 @@
+-- Meandros by Sktx
+-- https://logic-masters.de/Raetselportal/Raetsel/zeigen.php?id=0008W2
+
+# 3
+
+--hints
+a1 = 6
+d9 = 1
+e1 = 8
+e3 = 3
+e9 = 7
+f1 = 4
+h4 = 5
+i9 = 2
+
+-- diagonal rule
+!! i1 h2 g3 f4 e5 d6 c7 b8 a9
+
+-- palindromes
+b2 = a9
+b1 = a8
+c1 = a7
+c2 = a6
+c3 = a5
+
+d1 = c8
+d2 = c9
+d3 = b9
+d4 = b8
+d5 = b7
+
+g2 = f9
+g1 = f8
+h1 = f7
+h2 = f6
+h3 = f5
+
+i1 = h8
+i2 = h9
+i3 = g9
+i4 = g8
+i5 = g7
