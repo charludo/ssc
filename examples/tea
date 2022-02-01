@@ -1,0 +1,52 @@
+-- 16 Cups of Tea by Sumanta Mukherjee
+-- https://app.crackingthecryptic.com/sudoku/BLLGjtrb4P
+
+# 3
+
+-- less than
+d4 < c4
+h5 < h6
+
+-- diagonals
+8 = a3 + b2 + c1
+9 = g1 + h2 + i3
+7 = i7 + h8 + g9
+8 = c9 + b8 + a7
+
+-- "teas"
+-- when teas cover more than one area, !! is necessary
+
+-- blue
+14 = a5 + b4 + b5 + b6
+12 = e1 + d2 + e2 + f2
+20 = d8 + e8 + f8 + e9
+12 = h4 + h5 + h6 + i5
+
+-- green
+23 = c4 + c5 + c6 + d5
+!! d5 c4 c6
+27 = d3 + e3 + f3 + e4
+!! d3 f3 e4
+27 = g4 + g5 + g6 + f5
+!! g4 f5 g6
+24 = d7 + e7 + f7 + e6
+!! d7 e6 f7
+
+-- red
+27 = a2 + a3 + a4 + b3
+!! b3 a4
+25 = a6 + a7 + a8 + b7
+!! b7 a6
+25 = i2 + i3 + i4 + h3
+!! h3 i4
+25 = i6 + i7 + i8 + h7
+!! h7 i6
+
+25 = b1 + c1 + d1 + c2
+!! c2 d1
+25 = f1 + g1 + h1 + g2
+!! g2 f1
+26 = b9 + c9 + d9 + c8
+!! c8 d9
+18 = f9 + g9 + h9 + g8
+!! g8 f9

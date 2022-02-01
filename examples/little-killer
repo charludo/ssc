@@ -1,0 +1,17 @@
+-- Fat X Killer Sudoku by Aspartagcus
+-- https://logic-masters.de/Raetselportal/Raetsel/zeigen.php?id=00048F
+
+# 3
+
+--kropki dot
+d8 = 2 * d9 || d9 = 2 * d8
+
+-- diagonals
+a1 + b2 + c3 + d4 + e5 = 48 - (f6 + g7 + h8 + i9)
+a9 + b8 + c7 + d6 + e5 = 44 - (f4 + g3 + h2 + i1)
+
+a2 + b3 + c4 + d5 = 21 - (e6 + f7 + g8 + h9)
+b1 + c2 + d3 + e4 = 21 - (f5 + g6 + h7 + i8)
+
+a8 + b7 + c6 + d5 = 12 - (e4 + f3 + g2 + h1)
+b9 + c8 + d7 + e6 = 42 - (f5 + g4 + h3 + i2)
