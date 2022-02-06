@@ -5,11 +5,11 @@ from src import settings
 
 
 def solve(path, tex):
-    base = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+    limboole = os.environ["limboole"]
     satisfiable = True
     i = 0
     while satisfiable:
-        p = subprocess.Popen(os.path.join(base, f"limboole1.2/limboole -s {path}"), stdout=subprocess.PIPE, shell=True)
+        p = subprocess.Popen(f"{limboole} -s {path}", stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, shell=True)
         (output, error) = p.communicate()
         p.wait()
 
@@ -38,9 +38,9 @@ def solve(path, tex):
 
 
 def solve_test():
+    limboole = os.environ["limboole"]
     path = os.environ["outpath"]
-    base = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
-    p = subprocess.Popen(os.path.join(base, f"limboole1.2/limboole -s {path}"), stdout=subprocess.PIPE, shell=True)
+    p = subprocess.Popen(f"{limboole} -s {path}", stdout=subprocess.PIPE, shell=True)
     (output, error) = p.communicate()
     p.wait()
 
