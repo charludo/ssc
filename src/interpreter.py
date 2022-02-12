@@ -64,9 +64,9 @@ def extract_solution(output):
 
 
 def texify(solution):
-    solution = [solution[i::9] for i in range(9)]
+    solution = [solution[i:i+9] for i in range(0, 81, 9)]
     for s in solution:
-        print("|" + "|".join(s) + "|")
+        print("|" + "|".join(s) + "|.")
     print()
 
 
