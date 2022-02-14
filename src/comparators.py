@@ -1,6 +1,5 @@
 from itertools import product
 from src.helpers import and_clause, new_buffer, equalize, reduce
-from src import settings
 
 
 def EQ(left, right):
@@ -48,7 +47,7 @@ def GT(left, right, offset=1):
     left, right = equalize(left, right)
     for i in range(0, len_left):
         if right[i] != ["False"]:
-            for j in range(i+offset, settings.ORDER):
+            for j in range(i+offset, len_left):
                 options = and_clause(left[j], right[i])
                 buffer[j].extend(options if len(options) else ["False"])
 
