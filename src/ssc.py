@@ -27,13 +27,19 @@ def get_parse_tree(code):
 @click.option("--interpret", "-i", help="apply limboole to compiled file and display result", is_flag=True)
 @click.option("--limboole", "-l", help="specify and store absolute path to limboole executable", required=False, type=str)
 @click.option("--minimal", "-m", help="do not append base rules", is_flag=True)
+@click.option("--no-optimization", "-n", help="disable discarding of unsatisfiable rules", is_flag=True)
 @click.option("--report", "-r", help="report on compilation and evaluation times. argument sets number of timing processes.", required=False, type=int)
 @click.option("--tex", "-t", help="output solutions in LaTeX format", is_flag=True)
 @click.option("--view", "-v", help="print compiled formula to console (excluding base rules)", is_flag=True)
 @click.argument("filename")
-def run(filename, view, tex, report, minimal, limboole, interpret, base):
+def run(filename, view, tex, report, no_optimization, minimal, limboole, interpret, base):
     with open(filename, "r") as file:
         code = file.read()
+
+    if no_optimization:
+        environ["optimize"] = ""
+    else:
+        environ["optimize"] = "True"
 
     tree = get_parse_tree(code)
     compiler = Compiler(tree)

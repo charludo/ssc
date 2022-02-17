@@ -1,4 +1,5 @@
 import re
+from os import environ
 from itertools import product
 from src import settings
 
@@ -26,6 +27,8 @@ def deconstruct(atom):
 
 
 def is_allowed(left, right):
+    if not environ["optimize"]:
+        return True
     atoms_l = make_atomic(left)
     atoms_r = make_atomic(right)
 
