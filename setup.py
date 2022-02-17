@@ -8,7 +8,7 @@ HERE = pathlib.Path(__file__).parent
 README = (HERE / "README.md").read_text()
 
 setuptools.setup(name='ssc-compiler',
-                 version="1.0.0",
+                 version="1.0.1",
 
                  description='Describe generalized Sudokus through simple equations. Compile programs to SAT and solve them with limboole.',
                  long_description=README,
