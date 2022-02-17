@@ -1,6 +1,10 @@
 -- example puzzle from https://www.janko.at/Raetsel/Kakuro/index.htm
 -- fields must have a value 1 through 9
-
+(a1, a2, a4, a5,
+ b1, b2, b3, b4, b5,
+ c2, c3, c4,
+ d1, d2, d3, d4, d5,
+ e1, e2, e4, e5) = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 
 -- no duplicate values in a sum
 !! a1, a2
