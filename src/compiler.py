@@ -3,7 +3,7 @@ from lark import Tree
 from src.operators import ADD, SUB, MULT, OR
 from src.comparators import EQ, NEQ, LT, LEQ, GT, GEQ, POR
 from src.modifiers import NORTH, SOUTH, EAST, WEST, HORIZONTAL, VERTICAL, ORTHO, NE, SE, NW, SW, ANY
-from src.prefixes import DISTINCT
+from src.prefixes import DISTINCT, UNIQUE
 
 
 class Compiler:
@@ -111,5 +111,6 @@ class Compiler:
     }
 
     prefix_map = {
-        "!!": DISTINCT
+        "!!": DISTINCT,
+        "~~": UNIQUE
     }
